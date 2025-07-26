@@ -10,7 +10,7 @@
 The application is fully functional and ready for testing. Users can:
 - Upload images (PNG, JPG, JPEG, GIF, BMP, WebP)
 - Extract text using OCR technology
-- View results in a clean, modern interface
+- View results on same page
 
 ### 2. Implementation Writeup + OCR Approach
 
@@ -18,21 +18,12 @@ The application is fully functional and ready for testing. Users can:
 
 The application uses **Tesseract OCR** with optimized configuration for maximum accuracy:
 
-**Image Preprocessing:** Before OCR, uploaded images are converted to grayscale and binarized (thresholded) using Pillow. This preprocessing pipeline reduces noise and background artifacts, making the text stand out and work more efficiently with pytesseract!
-
-**Language Setting:** The OCR engine is explicitly set to English (`lang='eng'`) to ensure optimal accuracy for English text. This is ideal for documents and images containing English writing.
-
 **Key Optimizations:**
 - **Engine Mode (`--oem 3`)**: Uses the best available OCR engine for the platform
 - **Page Segmentation (`--psm 6`)**: Treats images as uniform text blocks for better accuracy
-- **Image Processing**: Automatic format detection and conversion via PIL/Pillow
+- **Image Processing**: Automatic format detection and conversion via PIL/Pillow (removes noise and background artifacts so text standds out better)
+- **Language Setting**: Specifically tuned to work for English (also noted on Front-End for users to know)
 - **Error Handling**: Comprehensive validation and graceful error recovery
-
-**Processing Pipeline:**
-1. **File Validation**: Type and size checking (10MB limit)
-2. **Image Loading**: Stream-based processing for efficiency
-3. **OCR Extraction**: Optimized Tesseract configuration
-4. **Result Display**: Clean, formatted text output
 
 ---
 ---
