@@ -122,6 +122,8 @@ A lightweight, production-ready web application that extracts text from uploaded
 - Responsive design with Tailwind CSS
 - Accessibility considerations
 - Error messages !
+- **Image preprocessing**: Grayscale, denoise, and binarize images before OCR for improved accuracy.
+- **English language only**: OCR is configured to extract English text (lang='eng').
 
 ### File Structure
 

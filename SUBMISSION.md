@@ -18,6 +18,9 @@ The application is fully functional and ready for testing. Users can:
 
 The application uses **Tesseract OCR** with optimized configuration for maximum accuracy:
 
+**Image Preprocessing:** Before OCR, uploaded images are converted to grayscale, denoised with a median filter, and binarized (thresholded) using Pillow. This preprocessing pipeline reduces noise and background artifacts, making text stand out and significantly improving OCR accuracy, especially for noisy or low-contrast images.
+
+**Language Setting:** The OCR engine is explicitly set to English (`lang='eng'`) to ensure optimal accuracy for English text. This is ideal for documents and images containing English writing.
 
 **Key Optimizations:**
 - **Engine Mode (`--oem 3`)**: Uses the best available OCR engine for the platform
@@ -38,6 +41,8 @@ The application uses **Tesseract OCR** with optimized configuration for maximum 
 ### **Production-Ready Features**
 - **Security**: Non-root container, input validation, secure defaults
 - **Performance**: Optimized Docker layers, efficient image processing
+- **Image Preprocessing**: Grayscale, denoise, and binarize images before OCR for improved accuracy
+- **English language only**: OCR is configured to extract English text (lang='eng').
 - **Monitoring**: Health checks, logging, error tracking
 
 ### **User Experience**

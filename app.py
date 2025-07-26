@@ -7,7 +7,7 @@ Deployed on Google Cloud Run
 
 
 from flask import Flask, request, render_template_string
-from PIL import Image
+from PIL import Image, ImageOps, ImageFilter
 from werkzeug.utils import secure_filename
 import pytesseract
 import logging
@@ -29,6 +29,18 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def preprocess_image(img):
+    """
+    Preprocess the image for better OCR accuracy:
+    - Convert to grayscale
+    - Apply median filter to reduce noise
+    - Binarize (threshold)
+    """
+    img = ImageOps.grayscale(img)
+    img = img.filter(ImageFilter.MedianFilter())
+    img = img.point(lambda x: 0 if x < 140 else 255, '1')
+    return img
+
 def extract_text_from_image(image_file):
     """
     Extract text from an uploaded image using Tesseract OCR.
@@ -38,14 +50,15 @@ def extract_text_from_image(image_file):
     Raises exception if OCR processing doesn't work
     """
     try:
-        # Open and process the image
+        # Open and preprocess the image
         img = Image.open(image_file.stream)
+        img = preprocess_image(img)
         
         # Configure Tesseract for better accuracy
         custom_config = r'--oem 3 --psm 6'
         
-        # Extract text from image
-        extracted_text = pytesseract.image_to_string(img, config=custom_config)
+        # Extract text from image (English only)
+        extracted_text = pytesseract.image_to_string(img, lang='eng', config=custom_config)
         
         logger.info(f"Successfully extracted text from image: {len(extracted_text)} characters")
         return extracted_text.strip()
@@ -75,6 +88,7 @@ def get_html_template():
             <div class="text-center mb-6">
                 <h1 class="text-2xl font-bold text-gray-800 mb-2">OCR Text Extraction</h1>
                 <p class="text-gray-600 text-sm">Upload an image to extract text using AI-powered OCR</p>
+                <p class="text-xs text-blue-600 mt-1">Note: This tool currently works best for English text.</p>
             </div>
             
             <!-- Error Messages -->
