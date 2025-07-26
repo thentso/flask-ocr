@@ -18,7 +18,7 @@ The application is fully functional and ready for testing. Users can:
 
 The application uses **Tesseract OCR** with optimized configuration for maximum accuracy:
 
-**Image Preprocessing:** Before OCR, uploaded images are converted to grayscale, denoised with a median filter, and binarized (thresholded) using Pillow. This preprocessing pipeline reduces noise and background artifacts, making text stand out and significantly improving OCR accuracy, especially for noisy or low-contrast images.
+**Image Preprocessing:** Before OCR, uploaded images are converted to grayscale and binarized (thresholded) using Pillow. This preprocessing pipeline reduces noise and background artifacts, making the text stand out and work more efficiently with pytesseract!
 
 **Language Setting:** The OCR engine is explicitly set to English (`lang='eng'`) to ensure optimal accuracy for English text. This is ideal for documents and images containing English writing.
 
@@ -35,19 +35,6 @@ The application uses **Tesseract OCR** with optimized configuration for maximum 
 4. **Result Display**: Clean, formatted text output
 
 ---
-
-## Technical Highlights
-
-### **Production-Ready Features**
-- **Security**: Non-root container, input validation, secure defaults
-- **Performance**: Optimized Docker layers, efficient image processing
-- **Image Preprocessing**: Grayscale, denoise, and binarize images before OCR for improved accuracy
-- **English language only**: OCR is configured to extract English text (lang='eng').
-- **Monitoring**: Health checks, logging, error tracking
-
-### **User Experience**
-- **Modern UI**: Clean, responsive design with Tailwind CSS
-
 ---
 
 ## Conclusion
