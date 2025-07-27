@@ -1,6 +1,6 @@
 # Flask OCR Web Application
 
-A lightweight, production-ready web application that extracts text from uploaded images using Tesseract OCR. Built with Flask and deployed on Google Cloud Run for the Flexbone Coding Challenge.
+A lightweight, production-ready web application that extracts text from multiple uploaded images using Tesseract OCR. Built with Flask and deployed on Google Cloud Run for the Flexbone Coding Challenge. Features multi-file upload, slide deck navigation, and enhanced download options.
 
 **Public URL:** https://flask-ocr-999651465930.us-central1.run.app
 
@@ -110,6 +110,8 @@ A lightweight, production-ready web application that extracts text from uploaded
 ### Key Components
 
 #### 1. **Flask Application (`app.py`)**
+- Multi-file upload support (up to 10 files)
+- Session management for results persistence
 - Logging for debugging and monitoring
 - Security best practices (file size limits, type validation)
 
@@ -119,9 +121,11 @@ A lightweight, production-ready web application that extracts text from uploaded
 - Production-ready Gunicorn configuration
 
 #### 3. **Frontend (HTML/CSS/JavaScript)**
+- Multi-file upload interface with file management
+- Slide deck navigation for browsing results
 - Responsive design with Tailwind CSS
 - Accessibility considerations
-- Error messages !
+- Error messages and validation
 - **Image preprocessing**: Grayscale, denoise, and binarize images before OCR for improved accuracy.
 - **English language only**: OCR is configured to extract English text (lang='eng').
 
@@ -145,14 +149,24 @@ flask-ocr/
 - **Response**: HTML page with upload interface
 
 #### `POST /`
-- **Description**: Process uploaded image and extract text
-- **Request**: Multipart form data with image file
-- **Response**: HTML page with extracted text or error message
+- **Description**: Process uploaded images and extract text
+- **Request**: Multipart form data with multiple image files
+- **Response**: HTML page with extracted text results or error message
+
+#### `POST /download-single`
+- **Description**: Download a single extracted text file
+- **Request**: Form data with file_index
+- **Response**: Text file download
+
+#### `POST /download-all`
+- **Description**: Download all extracted texts as a single file
+- **Request**: No parameters required
+- **Response**: Combined text file download
 
 ### Request Format
 ```
 Content-Type: multipart/form-data
-Body: image=<file>
+Body: images=<file1>, images=<file2>, ... (multiple files)
 ```
 
 ### Response Format
